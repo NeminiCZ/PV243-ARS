@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -43,6 +44,9 @@ public class OfferRepositoryTest {
 
     @PersistenceContext(type = PersistenceContextType.EXTENDED)
     private EntityManager entityManager;
+
+    @Inject
+    private Logger log;
 
     @Inject
     private UserTransaction tx;
@@ -92,7 +96,7 @@ public class OfferRepositoryTest {
 
     @Test
     public void createOfferTest() {
-        System.out.println("create offer test");
+        log.info("create offer test");
         Offer expected = ef.createOffer(address);
 
         offerRepository.create(expected);
@@ -103,7 +107,7 @@ public class OfferRepositoryTest {
 
     @Test
     public void updateOfferTest() {
-        System.out.println("update offer test");
+        log.info("update offer test");
         Offer expected = ef.createOffer(address);
         expected.setAnimalFriendly(true);
         offerRepository.create(expected);
@@ -119,7 +123,7 @@ public class OfferRepositoryTest {
 
     @Test
     public void deleteOfferTest() {
-        System.out.println("delete offer test");
+        log.info("delete offer test");
         Offer toDelete = ef.createOffer(address);
         offerRepository.create(toDelete);
 
@@ -132,7 +136,7 @@ public class OfferRepositoryTest {
 
     @Test
     public void findByIdTest() {
-        System.out.println("find by id offer test");
+        log.info("find by id offer test");
         Offer expected = ef.createOffer(address);
         offerRepository.create(expected);
 
@@ -142,7 +146,7 @@ public class OfferRepositoryTest {
 
     @Test
     public void findAllTest() {
-        System.out.println("find all offer test");
+        log.info("find all offer test");
         assertEquals(offerRepository.findAll().size(), 2);
 
         Offer offer = ef.createOffer(address);
@@ -154,7 +158,7 @@ public class OfferRepositoryTest {
 
     @Test
     public void findAllForUserTest() {
-        System.out.println("find all offers for user test");
+        log.info("find all offers for user test");
         User user = ef.createUser("testUser");
         userRepository.create(user);
         List<Offer> allForUser = offerRepository.findAllForUser(user);

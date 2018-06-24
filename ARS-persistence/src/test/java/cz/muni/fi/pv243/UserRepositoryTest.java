@@ -3,6 +3,7 @@ package cz.muni.fi.pv243;
 import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDate;
+import java.util.logging.Logger;
 
 import javax.ejb.EJBTransactionRolledbackException;
 import javax.inject.Inject;
@@ -44,6 +45,9 @@ public class UserRepositoryTest {
 
     @PersistenceContext(type = PersistenceContextType.EXTENDED)
     private EntityManager entityManager;
+
+    @Inject
+    private Logger log;
 
     @Inject
     private UserTransaction tx;
@@ -95,7 +99,7 @@ public class UserRepositoryTest {
 
     @Test
     public void createUserTest() {
-        System.out.println("create test user");
+        log.info("create test user");
         User expected = ef.createUser("testUser");
 
         userRepository.create(expected);
@@ -106,7 +110,7 @@ public class UserRepositoryTest {
 
     @Test
     public void updateUserTest() {
-        System.out.println("update test user");
+        log.info("update test user");
         User expected = ef.createUser("updateUser", address);
         userRepository.create(expected);
         assertEquals(userRepository.findById(expected.getId()), expected);
@@ -121,7 +125,7 @@ public class UserRepositoryTest {
 
     @Test
     public void deleteUserTest() {
-        System.out.println("delete test user");
+        log.info("delete test user");
         User user = ef.createUser("userForDelete");
         userRepository.create(user);
 
@@ -134,7 +138,7 @@ public class UserRepositoryTest {
 
     @Test
     public void findByIdTest() {
-        System.out.println("find by id test user");
+        log.info("find by id test user");
         User expected = ef.createUser("findUser", address);
         userRepository.create(expected);
 
@@ -144,7 +148,7 @@ public class UserRepositoryTest {
 
     @Test
     public void findAllTest() {
-        System.out.println("find all test user");
+        log.info("find all test user");
         assertEquals(userRepository.findAll().size(), 3);
 
         User expected = ef.createUser("findAllUser", address);
