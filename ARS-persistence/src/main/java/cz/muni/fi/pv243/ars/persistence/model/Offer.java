@@ -150,9 +150,10 @@ public class Offer implements Serializable {
     public int hashCode() {
         int result = getAddress().hashCode();
         result = 31 * result + getCapacity().hashCode();
-        result = 31 * result + getAccommodationType().hashCode();
+        result = 31 * result + (getAccommodationType() != null ? getAccommodationType().hashCode() : 0);
         result = 31 * result + (isAnimalFriendly != null ? isAnimalFriendly.hashCode() : 0);
         result = 31 * result + (isSmokerFriendly != null ? isSmokerFriendly.hashCode() : 0);
         return result;
     }
+
 }
